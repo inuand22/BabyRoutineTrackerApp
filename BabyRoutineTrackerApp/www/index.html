@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creciendo Juntos</title>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.esm.js"></script>
+    <script nomodule src="https://cdn.jsdelivr.net/npm/@ionic/core/dist/ionic/ionic.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@ionic/core/css/ionic.bundle.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css"
+        integrity="sha256-kLaT2GOSpHechhsozzB+flnD+zUyjE2LlfWPgU04xyI=" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"
+        integrity="sha256-WBkoXOwTeyKclOHuWtc+i2uENFpDZ9YPdf5Hf+D7ewM=" crossorigin=""></script>
+
+    <style>
+        #map {
+            height: 75%;
+        }
+    </style>
+</head>
+
+<body>
+    <ion-app>
+        <!--Ruteo-->
+        <ion-router id="ruteo">
+            <ion-route url="/" component="page-home"></ion-route>
+            <ion-route url="/login" component="page-login"></ion-route>
+            <ion-route url="/registro" component="page-registro"></ion-route>
+            <ion-route url="/logueado" component="page-logueado"></ion-route>
+            <ion-route url="/home" component="page-home"></ion-route>
+            <ion-route url="/agregarEvento" component="pantalla-agregar-eventos"></ion-route>
+            <ion-route url="/listadoEventos" component="pantalla-listar-eventos"></ion-route>
+            <ion-route url="/informesEventos" component="pantalla-informes-eventos"></ion-route>
+            <ion-route url="/mapa" component="pantalla-mapa"></ion-route>
+        </ion-router>
+        <ion-nav></ion-nav>
+
+        <!--Menu-->
+        <ion-menu side="start" menu-id="first" content-id="main" id="menu">
+            <ion-header>
+                <ion-toolbar color="primary">
+                    <ion-title>MENÚ</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <ion-list id="listaMenu">
+                </ion-list>
+            </ion-content>
+        </ion-menu>
+        <div id="main"></div>
+
+        <!--Home-->
+        <page-home class="ion-page" id="pantalla-home">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="start">
+                        <ion-menu-button></ion-menu-button>
+                    </ion-buttons>
+                    <ion-title>Creciendo Juntos</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <img src="https://assets.saposyprincesas.com/2022/10/nin%CC%83os-portarse-mal.jpg/900/webp">
+            </ion-content>
+        </page-home>
+
+        <!--Registro-->
+        <ion-page class="ion-page" id="pantalla-registro">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="start">
+                        <ion-menu-button></ion-menu-button>
+                    </ion-buttons>
+                    <ion-title>Registro</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <div class="registro-container">
+                    <ion-item>
+                        <ion-label>Usuario:</ion-label>
+                        <ion-input type="text" id="usuarioRegistro"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Password:</ion-label>
+                        <ion-input type="password" id="passwordRegistro"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-select label="Departamento" interface="action-sheet" placeholder="Seleccionar"
+                            cancel-text="Volver" id="registroDepartamento"></ion-select>
+                    </ion-item>
+                    <ion-item>
+                        <ion-select label="Ciudad" interface="action-sheet" placeholder="Seleccionar"
+                            cancel-text="Volver" id="registroCiudad"> </ion-select>
+                    </ion-item>
+                    <ion-button expand="full" color="primary" id="registro-button">Registrarse</ion-button>
+                    <p id="parrafoErrorRegistro"></p>
+                </div>
+            </ion-content>
+        </ion-page>
+
+        <!--Login-->
+        <ion-page class="ion-page" id="pantalla-login">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="start">
+                        <ion-menu-button></ion-menu-button>
+                    </ion-buttons>
+                    <ion-title>Login</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <div class="registro-container">
+                    <ion-item>
+                        <ion-label>Usuario:</ion-label>
+                        <ion-input type="text" id="usuarioLogin"></ion-input>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Password:</ion-label>
+                        <ion-input type="password" id="passwordLogin"></ion-input>
+                    </ion-item>
+                    <ion-button expand="full" color="primary" id="login-button">Login</ion-button>
+                    <p id="parrafoErrorLogin"></p>
+                </div>
+            </ion-content>
+        </ion-page>
+
+        <!--Logueado-->
+        <ion-page class="ion-page" id="pantalla-logueado">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="end">
+                        <ion-menu-button></ion-menu-button>
+                    </ion-buttons>
+                    <ion-title>BIENVENIDO</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <div class="logueado-container">
+                    <img
+                        src="https://previews.123rf.com/images/kobyakov/kobyakov1408/kobyakov140800183/30424154-el-ni%C3%B1o-peque%C3%B1o-lindo-est%C3%A1-apuntando-hacia-arriba-usando-su-dedo-%C3%ADndice-aislado-m%C3%A1s-de-blanco.jpg">
+                </div>
+            </ion-content>
+        </ion-page>
+
+        <!--Agregar Evento-->
+        <ion-page class="ion-page" id="pantalla-agregar-eventos">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="end">
+                        <ion-menu-button></ion-menu-button>
+                    </ion-buttons>
+                    <ion-title>Agregar Evento</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <div class="agregarEvento">
+                    <ion-item>
+                        <ion-select label="Categoría" interface="action-sheet" placeholder="Seleccionar"
+                            cancel-text="Volver" id="categoriaEvento">
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Detalle:</ion-label>
+                        <ion-input type="text" id="detallesEvento"></ion-input>
+                    </ion-item>
+                    <ion-item id="itemBtnAbrirCalendario">
+                        <ion-button expand="full" color="primary" id="btnAbrirCalendario">Seleccionar Fecha y
+                            Hora</ion-button>
+                    </ion-item>
+                    <ion-item id="itemCalendario">
+                        <ion-datetime presentation="date-time" prefer-wheel="true" id="fechaYHoraEvento"></ion-datetime>
+                    </ion-item>
+                    <ion-button expand="full" color="primary" id="agregar-evento-button">Agregar Evento</ion-button>
+                    <p id="parrafoAgregarEvento"></p>
+                </div>
+            </ion-content>
+        </ion-page>
+
+        <!--Listar Eventos-->
+        <ion-page class="ion-page" id="pantalla-listar-eventos">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="end">
+                        <ion-menu-button></ion-menu-button>
+                    </ion-buttons>
+                    <ion-title>Eventos</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <div class="listarEventos">
+                    <ion-grid id="listadoDeEventosDeHoy">
+                        <ion-row>
+                            <ion-col class="ion-text-center"><strong>Categoría</strong></ion-col>
+                            <ion-col class="ion-text-center"><strong>Fecha & Hora</strong></ion-col>
+                            <ion-col class="ion-text-center"><strong>Detalle</strong></ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+                <div class="listadoDeEventosDeDíasAnteriores">
+                    <ion-grid id="listadoDeEventosDeDíasAnteriores">
+                        <ion-row>
+                            <ion-col class="ion-text-center"><strong>Categoría</strong></ion-col>
+                            <ion-col class="ion-text-center"><strong>Fecha & Hora</strong></ion-col>
+                            <ion-col class="ion-text-center"><strong>Detalle</strong></ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </div>
+            </ion-content>
+        </ion-page>
+
+        <!--Informe Eventos-->
+        <ion-page class="ion-page" id="pantalla-informes-eventos">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="end">
+                        <ion-menu-button></ion-menu-button>
+                    </ion-buttons>
+                    <ion-title>Informes</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <div class="informeEventos">
+                    <ion-grid id="listadoDeInformesBiberones">
+                    </ion-grid>
+                    <ion-grid id="listadoDeInformesPañales">
+                    </ion-grid>
+                </div>
+            </ion-content>
+        </ion-page>
+
+        <!--Informe Eventos-->
+        <ion-page class="ion-page" id="pantalla-mapa">
+            <ion-header>
+                <ion-toolbar>
+                    <ion-buttons slot="end">
+                        <ion-menu-button></ion-menu-button>
+                    </ion-buttons>
+                    <ion-title>Mapa</ion-title>
+                </ion-toolbar>
+            </ion-header>
+            <ion-content>
+                <div id="map"></div>
+            </ion-content>
+        </ion-page>
+
+    </ion-app>
+
+    <script src="js/codigo.js"></script>
+</body>
+
+</html>
